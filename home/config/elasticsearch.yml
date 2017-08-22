@@ -26,9 +26,10 @@ node.name: MoquiLocal
 #
 #node.attr.rack: r1
 
-node.master: true
-node.data: true
-node.ingest: true
+node.master: false
+node.data: false
+node.ingest: false
+search.remote.connect: false
 
 # ----------------------------------- Paths ------------------------------------
 #
@@ -58,18 +59,21 @@ node.ingest: true
 
 # By default use _local_ and _site_ for localhost or any local network including docker container virtual network
 network.host:
-  - _site_
-  - _local_
-transport.type: local
-discovery.type: single-node
+  - 192.168.2.101
+#transport.type: local
+discovery.type: zen
 
 # CORS settings for local testing only
 # http.cors.enabled: true
 # http.cors.allow-origin: '*'
 http.enabled: true
 
+http.publish_port: 9210
 # Set a custom port for HTTP:
-http.port: 9200
+http.port: 9210
+
+transport.publish_port: 9310
+transport.tcp.port: 9310
 
 # For more information, see the documentation at:
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html>
@@ -79,11 +83,11 @@ http.port: 9200
 # Pass an initial list of hosts to perform discovery when new node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
-#discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+discovery.zen.ping.unicast.hosts: ["192.168.2.101:9300"]
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
 #
-#discovery.zen.minimum_master_nodes: 3
+discovery.zen.minimum_master_nodes: 1
 #
 # For more information, see the documentation at:
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
